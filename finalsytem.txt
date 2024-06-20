@@ -1,0 +1,39 @@
+import cv2
+import time
+
+# Set up the pet types and corresponding foods
+pet_types = ['dog', 'cat', 'bird', 'fish']
+foods = ['dog food', 'cat food', 'bird seed', 'fish food']
+
+# Set up the webcam
+cap = cv2.VideoCapture(0)
+
+while True:
+    # Read a frame from the webcam
+    ret, frame = cap.read()
+    
+    # Convert the frame to grayscale
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    # Calculate the average brightness of the frame
+    avg_brightness = np.mean(gray)
+    
+    # Determine the pet type based on the average brightness
+    if avg_brightness < 50:
+        pet_type = 'dog'
+    elif avg_brightness < 100:
+        pet_type = 'cat'
+    elif avg_brightness < 150:
+        pet_type = 'bird'
+    else:
+        pet_type = 'fish'
+    
+    # Print out the corresponding food
+    print(f"Dispensing {foods[pet_types.index(pet_type)]}")
+    
+    # Wait for 5 seconds before checking again
+    time.sleep(5)
+
+# Release the webcam
+cap.release()
+cv2.destroyAllWindows()
